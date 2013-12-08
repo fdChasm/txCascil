@@ -2,9 +2,9 @@ import time
 
 from twisted.internet import reactor
 
+from cascil import ServerServiceFactory
 from cascil.permissions.functionality import Functionality
 from cascil.permissions.permission_resolver import PermissionResolver
-from cascil.server.service_factory import ServiceFactory
 
 
 config = {
@@ -48,7 +48,7 @@ permission_resolver = PermissionResolver.from_dictionary(permission_dictionary)
 
 context = {}
 
-service_factory = ServiceFactory()
+service_factory = ServerServiceFactory()
 cascil_service = service_factory.build_service(context, config, message_handlers, permission_resolver)
 
 cascil_service.startService()

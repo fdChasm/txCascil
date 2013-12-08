@@ -3,7 +3,7 @@ import time
 
 from twisted.internet import reactor
 
-from cascil.client.service_factory import ServiceFactory
+from cascil import ClientServiceFactory
 
 
 config = {
@@ -30,6 +30,9 @@ def display_ping(message):
 
     print "ping response: cts: {:.4f} ms, stc: {:.4f} ms, rnd: {:.4f} ms".format(cts, stc, rnd)
 
+def display_error(failure):
+    sys.stderr.write(str(failure))
+
 class PongMessageHandler(object):
     @classmethod
     def handle_message(cls, context, client_controller, message):
@@ -48,15 +51,11 @@ message_handlers = {
 
 context = {}
 
-client_service_factory = ServiceFactory()
+client_service_factory = ClientServiceFactory()
 client_service = client_service_factory.build_service(context, config, message_handlers)
-
-def display_error(failure):
-    sys.stderr.write(str(failure))
 
 # Messages queued before authentication may take a long time to be delivered
 client_service.request({'msgtype': 'ping', 'time': int(time.time() * 1000000)}).addCallbacks(display_ping, display_error)
 
 client_service.startService()
-
 reactor.run()

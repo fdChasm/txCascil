@@ -7,7 +7,7 @@ from cascil.server.service import Service
 import cascil.transports  # @UnusedImport
 
 
-class ServiceFactory(object):
+class ServerServiceFactory(object):
     def __init__(self):
         self._transports = {}
         self._packings = {}

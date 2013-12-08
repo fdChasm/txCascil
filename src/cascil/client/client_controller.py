@@ -67,10 +67,10 @@ class ClientController(object):
             request_deferred = self._pending_requests.pop(respid, None)
             if request_deferred is not None:
                 request_deferred.callback(message)
-        except Exception as e:
+        except:
             traceback.print_exc()
 
         try:
             self._central_message_handler.handle_message(self._context, self, message)
-        except Exception as e:
+        except:
             traceback.print_exc()
