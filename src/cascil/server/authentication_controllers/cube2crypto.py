@@ -9,7 +9,7 @@ from cascil.utils.enum import enum
 
 states = enum('PENDING_CONNECT', 'PENDING_ANSWER', 'AUTHENTICATED', 'DENIED')
 
-@register('gep_authentication_controller', 'cube2crypto')
+@register('server_authentication_controller', 'cube2crypto')
 class Cube2CryptoAuthenticationController(object):
     def __init__(self, config, protocol):
         self._config = config
@@ -45,9 +45,9 @@ class Cube2CryptoAuthenticationController(object):
     @property
     def _next_expected_message(self):
         if self._state == states.PENDING_CONNECT:
-            return u'gep.connect'
+            return u'connect'
         elif self._state == states.PENDING_ANSWER:
-            return u'gep.answer'
+            return u'answer'
 
     def _issue_challenge(self, domain, username, reqid):
         self._domain = domain
@@ -59,7 +59,7 @@ class Cube2CryptoAuthenticationController(object):
 
         challenge, self._expected_answer = map(str, cube2crypto.generate_challenge(public_key))
 
-        self.send({"msgtype": "gep.challenge", "challenge": challenge}, respid=reqid)
+        self.send({"msgtype": "challenge", "challenge": challenge}, respid=reqid)
 
         self._state = states.PENDING_ANSWER
 
@@ -67,7 +67,7 @@ class Cube2CryptoAuthenticationController(object):
         self._answer = answer
 
         if self._answer == self._expected_answer:
-            self.send({"msgtype": "gep.status", "status": "success"}, respid=reqid)
+            self.send({"msgtype": "status", "status": "success"}, respid=reqid)
             self._state = states.AUTHENTICATED
         else:
             raise AuthenticationHardFailure()
@@ -79,9 +79,9 @@ class Cube2CryptoAuthenticationController(object):
             msg_type = message.get('msgtype')
             if self._next_expected_message != msg_type: raise AuthenticationHardFailure()
 
-            if msg_type == u'gep.connect':
+            if msg_type == u'connect':
                 self._issue_challenge(message.get('domain'), message.get('username'), message.get('reqid', None))
-            elif msg_type == u'gep.answer':
+            elif msg_type == u'answer':
                 self._validate_answer(message.get('answer'), message.get('reqid', None))
             else:
                 raise AuthenticationHardFailure()

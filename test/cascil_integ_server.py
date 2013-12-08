@@ -1,17 +1,19 @@
-from cascil.service_factory import ServiceFactory
-from twisted.application import service
-from twisted.internet import reactor
-from cascil.permissions.permission_resolver import PermissionResolver
-from cascil.permissions.functionality import Functionality
 import time
 
-application = service.Application("cascil_echo")
+from twisted.internet import reactor
+
+from cascil.permissions.functionality import Functionality
+from cascil.permissions.permission_resolver import PermissionResolver
+from cascil.server.service_factory import ServiceFactory
+
 
 service_factory = ServiceFactory()
 
 context = {}
 
 config = {
+    'interface': '127.0.0.1',
+    'port': 29000,
     'transport': 'netstring',
     'packing': 'edn',
     'authentication': {
@@ -25,12 +27,10 @@ config = {
             }
         }
     },
-    'interface': '127.0.0.1',
-    'port': 29000,
 }
 
 class PingMessageHandler(object):
-    msgtype = 'gep.ping'
+    msgtype = 'ping'
     execute = Functionality(msgtype)
 
     @classmethod
@@ -53,6 +53,5 @@ permission_resolver = PermissionResolver.from_dictionary(permission_dictionary)
 
 cascil_service = service_factory.build_service(context, config, message_handlers, permission_resolver)
 
-cascil_service.setServiceParent(application)
 cascil_service.startService()
 reactor.run()

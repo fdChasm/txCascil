@@ -1,5 +1,5 @@
-from cascil.central_message_handler import CentralMessageHandler
-from cascil.client_controller import ClientController
+from cascil.server.central_message_handler import CentralMessageHandler
+from cascil.server.client_controller import ClientController
 
 
 class ClientControllerFactory(object):

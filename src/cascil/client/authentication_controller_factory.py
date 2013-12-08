@@ -1,4 +1,4 @@
-import cascil.authentication_controllers  # @UnusedImport
+import cascil.client.authentication_controllers  # @UnusedImport
 from cascil.registry_manager import RegistryManager
 
 
@@ -9,7 +9,7 @@ class AuthenticationControllerFactory(object):
         authentication_type = config['type']
 
         self._AuthenticationController = None
-        for transport_registration in RegistryManager.get_registrations('gep_authentication_controller'):
+        for transport_registration in RegistryManager.get_registrations('client_authentication_controller'):
             controller_name = transport_registration.args[0]
             controller_class = transport_registration.registered_object
 

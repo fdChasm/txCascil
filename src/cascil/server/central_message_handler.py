@@ -18,6 +18,7 @@ class CentralMessageHandler(object):
 
     def handle_message(self, context, client_controller, message):
         message_handler = self._get_message_handler(message)
-        if not client_controller.allowed(message_handler.execute):
-            raise Exception("Permission denied.")
+        if hasattr(message_handler, 'execute') and hasattr(client_controller, 'allowed'):
+            if not client_controller.allowed(message_handler.execute):
+                raise Exception("Permission denied.")
         message_handler.handle_message(context, client_controller, message)

@@ -28,6 +28,9 @@ class ClientController(object):
         group_names = self.get_group_names()
         return self._permission_resolver.groups_allow(group_names, functionality)
 
+    def connection_established(self):
+        pass
+
     def receive(self, message):
         if self.is_authenticated:
             self._receive_authenticated(message)
@@ -42,7 +45,7 @@ class ClientController(object):
         try:
             self._authentication_controller.receive(message)
         except AuthenticationHardFailure:
-            self.send({"msgtype": "gep.error", "message": "Authentication failure"}, message.get('reqid', None))
+            self.send({"msgtype": "error", "message": "Authentication failure"}, message.get('reqid', None))
             self._protocol.disconnect()
 
     def _receive_authenticated(self, message):
@@ -52,4 +55,4 @@ class ClientController(object):
             self.send({"msgtype": "error", "message": e.message}, message.get('reqid', None))
 
     def on_subscribed_event(self, event_stream, data):
-        self.send({"msgtype": "gep.event", "event_stream": event_stream, "event_data": data})
+        self.send({"msgtype": "event", "event_stream": event_stream, "event_data": data})

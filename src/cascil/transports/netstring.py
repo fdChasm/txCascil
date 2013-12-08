@@ -20,6 +20,10 @@ class NetstringProtocol(NetstringReceiver):
     def disconnect(self):
         self.transport.loseConnection()
 
+    def connectionMade(self):
+        NetstringReceiver.connectionMade(self)
+        self.controller.connection_established()
+
     def connectionLost(self, reason=connectionDone):
         self.controller.disconnected()
         NetstringReceiver.connectionLost(self, reason=reason)

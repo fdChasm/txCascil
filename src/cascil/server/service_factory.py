@@ -1,9 +1,9 @@
-from cascil.authentication_controller_factory import AuthenticationControllerFactory
-from cascil.client_controller_factory import ClientControllerFactory
 import cascil.packings  # @UnusedImport
-from cascil.protocol_factory import ProtocolFactory
 from cascil.registry_manager import RegistryManager
-from cascil.service import Service
+from cascil.server.authentication_controller_factory import AuthenticationControllerFactory
+from cascil.server.client_controller_factory import ClientControllerFactory
+from cascil.server.protocol_factory import ProtocolFactory
+from cascil.server.service import Service
 import cascil.transports  # @UnusedImport
 
 
@@ -29,9 +29,9 @@ class ServiceFactory(object):
         TransportProtocol = self._transports[transport_name]
         packing = self._packings[packing_name]
 
-        authentication_type = config['authentication']
+        authentication = config['authentication']
 
-        authentication_controller_factory = AuthenticationControllerFactory(authentication_type)
+        authentication_controller_factory = AuthenticationControllerFactory(authentication)
 
         client_controller_factory = ClientControllerFactory(context, message_handlers, permission_resolver)
 
