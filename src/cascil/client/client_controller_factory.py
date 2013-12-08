@@ -7,6 +7,6 @@ class ClientControllerFactory(object):
         self._context = context
         self._message_handlers = message_handlers
 
-    def build(self, client_addr, protocol, authentication_controller):
+    def build(self, client_addr, protocol, authentication_controller, request_queue):
         central_message_handler = CentralMessageHandler(self._message_handlers)
-        return ClientController(self._context, client_addr, protocol, central_message_handler, authentication_controller)
+        return ClientController(self._context, client_addr, protocol, central_message_handler, authentication_controller, request_queue)

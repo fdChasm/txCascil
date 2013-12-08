@@ -7,15 +7,11 @@ from cascil.permissions.permission_resolver import PermissionResolver
 from cascil.server.service_factory import ServiceFactory
 
 
-service_factory = ServiceFactory()
-
-context = {}
-
 config = {
     'interface': '127.0.0.1',
     'port': 29000,
     'transport': 'netstring',
-    'packing': 'edn',
+    'packing': 'json',
     'authentication': {
         'type': 'cube2crypto',
         "credentials": {
@@ -48,9 +44,11 @@ permission_dictionary = {
         "allows": ["*"]
     }
 }
-
 permission_resolver = PermissionResolver.from_dictionary(permission_dictionary)
 
+context = {}
+
+service_factory = ServiceFactory()
 cascil_service = service_factory.build_service(context, config, message_handlers, permission_resolver)
 
 cascil_service.startService()

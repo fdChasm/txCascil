@@ -19,3 +19,6 @@ class Service(service.MultiService):
 
     def stopService(self):
         return service.MultiService.stopService(self)
+    
+    def request(self, message):
+        return self._protocol_factory.request(message)
