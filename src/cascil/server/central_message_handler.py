@@ -1,12 +1,16 @@
 from cascil.permissions.functionality import Functionality
 
 
+class UnknownMessageType(Exception): pass
+class PermissionDenied(Exception): pass
+
+
 class UnknownMessageHandler(object):
-    execute = Functionality('gep.unknown_message')
+    execute = Functionality('unknown_message')
 
     @staticmethod
     def handle_message(spyd_server, gep_client, message):
-        raise Exception("Unknown msgtype {!r} received.".format(message.get('msgtype', None)))
+        raise UnknownMessageType(repr(message.get('msgtype', None)))
 
 class CentralMessageHandler(object):
     def __init__(self, message_handlers):
@@ -20,5 +24,5 @@ class CentralMessageHandler(object):
         message_handler = self._get_message_handler(message)
         if hasattr(message_handler, 'execute') and hasattr(client_controller, 'allowed'):
             if not client_controller.allowed(message_handler.execute):
-                raise Exception("Permission denied.")
+                raise PermissionDenied()
         message_handler.handle_message(context, client_controller, message)

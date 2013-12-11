@@ -22,7 +22,7 @@ class ServerServiceFactory(object):
             packing_class = packing_registration.registered_object
             self._packings[packing_name] = packing_class
 
-    def build_service(self, context, config, message_handlers, permission_resolver):
+    def build_service(self, context, config, message_handlers, permission_resolver, event_subscription_fulfiller):
         transport_name = config['transport']
         packing_name = config['packing']
 
@@ -33,7 +33,7 @@ class ServerServiceFactory(object):
 
         authentication_controller_factory = AuthenticationControllerFactory(authentication)
 
-        client_controller_factory = ClientControllerFactory(context, message_handlers, permission_resolver)
+        client_controller_factory = ClientControllerFactory(context, message_handlers, permission_resolver, event_subscription_fulfiller)
 
         factory = ProtocolFactory(TransportProtocol, packing, client_controller_factory, authentication_controller_factory)
 

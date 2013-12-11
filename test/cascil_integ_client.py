@@ -38,6 +38,11 @@ class PongMessageHandler(object):
     def handle_message(cls, context, client_controller, message):
         display_ping(message)
 
+class PrintMessageHandler(object):
+    @classmethod
+    def handle_message(cls, context, client_controller, message):
+        print message
+
 class AuthenticatedMessageHandler(object):
     @classmethod
     def handle_message(cls, context, client_controller, message):
@@ -47,6 +52,8 @@ class AuthenticatedMessageHandler(object):
 message_handlers = {
     'authenticated': AuthenticatedMessageHandler,
     'pong': PongMessageHandler,
+    'event': PrintMessageHandler,
+    'status': PrintMessageHandler,
 }
 
 context = {}
@@ -56,6 +63,7 @@ client_service = client_service_factory.build_service(context, config, message_h
 
 # Messages queued before authentication may take a long time to be delivered
 client_service.request({'msgtype': 'ping', 'time': int(time.time() * 1000000)}).addCallbacks(display_ping, display_error)
+client_service.request({'msgtype': 'subscribe', 'event_stream': 'clock_tick'})
 
 client_service.startService()
 reactor.run()
