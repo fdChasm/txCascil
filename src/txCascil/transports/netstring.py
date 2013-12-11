@@ -1,7 +1,7 @@
 from twisted.internet.protocol import connectionDone
 from twisted.protocols.basic import NetstringReceiver
 
-from cascil.registry_manager import register
+from txCascil.registry_manager import register
 
 
 @register('transport', 'netstring')

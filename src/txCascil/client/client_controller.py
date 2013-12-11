@@ -1,9 +1,10 @@
 import itertools
-
-from cascil.exceptions import AuthenticationHardFailure
 import traceback
-from twisted.internet.error import ConnectionLost
+
 from twisted.internet import defer
+from twisted.internet.error import ConnectionLost
+
+from txCascil.exceptions import AuthenticationHardFailure
 
 
 class ClientController(object):

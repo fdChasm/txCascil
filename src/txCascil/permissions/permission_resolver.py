@@ -1,7 +1,7 @@
 import re
 import string
 
-from cascil.permissions.group import Group
+from txCascil.permissions.group import Group
 
 
 class GroupInheritanceCycle(Exception): pass

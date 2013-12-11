@@ -1,13 +1,13 @@
-import cascil.packings  # @UnusedImport
-from cascil.registry_manager import RegistryManager
-from cascil.server.authentication_controller_factory import AuthenticationControllerFactory
-from cascil.server.client_controller_factory import ClientControllerFactory
-from cascil.server.protocol_factory import ProtocolFactory
-from cascil.server.service import Service
-import cascil.transports  # @UnusedImport
+import txCascil.packings  # @UnusedImport
+from txCascil.registry_manager import RegistryManager
+from txCascil.client.authentication_controller_factory import AuthenticationControllerFactory
+from txCascil.client.client_controller_factory import ClientControllerFactory
+from txCascil.client.protocol_factory import ProtocolFactory
+from txCascil.client.service import Service
+import txCascil.transports  # @UnusedImport
 
 
-class ServerServiceFactory(object):
+class ClientServiceFactory(object):
     def __init__(self):
         self._transports = {}
         self._packings = {}
@@ -22,7 +22,7 @@ class ServerServiceFactory(object):
             packing_class = packing_registration.registered_object
             self._packings[packing_name] = packing_class
 
-    def build_service(self, context, config, message_handlers, permission_resolver, event_subscription_fulfiller):
+    def build_service(self, context, config, message_handlers):
         transport_name = config['transport']
         packing_name = config['packing']
 
@@ -33,7 +33,7 @@ class ServerServiceFactory(object):
 
         authentication_controller_factory = AuthenticationControllerFactory(authentication)
 
-        client_controller_factory = ClientControllerFactory(context, message_handlers, permission_resolver, event_subscription_fulfiller)
+        client_controller_factory = ClientControllerFactory(context, message_handlers)
 
         factory = ProtocolFactory(TransportProtocol, packing, client_controller_factory, authentication_controller_factory)
 

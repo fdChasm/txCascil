@@ -1,5 +1,5 @@
-import cascil.server.authentication_controllers  # @UnusedImport
-from cascil.registry_manager import RegistryManager
+import txCascil.server.authentication_controllers  # @UnusedImport
+from txCascil.registry_manager import RegistryManager
 
 
 class AuthenticationControllerFactory(object):

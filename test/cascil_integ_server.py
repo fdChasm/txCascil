@@ -2,10 +2,10 @@ import time
 
 from twisted.internet import reactor
 
-from cascil import ServerServiceFactory
-from cascil.permissions.functionality import Functionality
-from cascil.permissions.permission_resolver import PermissionResolver
-from cascil.events import EventSubscriptionFulfiller
+from txCascil import ServerServiceFactory
+from txCascil.permissions.functionality import Functionality
+from txCascil.permissions.permission_resolver import PermissionResolver
+from txCascil.events import EventSubscriptionFulfiller
 
 
 config = {

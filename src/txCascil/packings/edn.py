@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-from cascil.registry_manager import register
+from txCascil.registry_manager import register
 import clj
 
 @register('packing', 'edn')

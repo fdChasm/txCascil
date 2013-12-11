@@ -2,9 +2,9 @@ from __future__ import absolute_import
 
 import cube2crypto
 
-from cascil.exceptions import AuthenticationHardFailure
-from cascil.registry_manager import register
-from cascil.utils.enum import enum
+from txCascil.exceptions import AuthenticationHardFailure
+from txCascil.registry_manager import register
+from txCascil.utils.enum import enum
 
 
 states = enum('PENDING_CONNECT', 'PENDING_ANSWER', 'AUTHENTICATED', 'DENIED')

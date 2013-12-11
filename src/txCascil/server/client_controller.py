@@ -1,5 +1,5 @@
-from cascil.exceptions import AuthenticationHardFailure
-from cascil.events import SubscriptionError
+from txCascil.exceptions import AuthenticationHardFailure
+from txCascil.events import SubscriptionError
 
 
 class ClientController(object):

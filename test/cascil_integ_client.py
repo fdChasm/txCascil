@@ -3,7 +3,7 @@ import time
 
 from twisted.internet import reactor
 
-from cascil import ClientServiceFactory
+from txCascil import ClientServiceFactory
 
 
 config = {

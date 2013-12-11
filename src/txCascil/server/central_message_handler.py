@@ -1,4 +1,4 @@
-from cascil.permissions.functionality import Functionality
+from txCascil.permissions.functionality import Functionality
 
 
 class UnknownMessageType(Exception): pass
