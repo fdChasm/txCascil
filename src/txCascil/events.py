@@ -16,7 +16,7 @@ class EventSubscriptionFulfiller(object):
         # event_stream: set(handlers)
         self._subscriptions = {}
 
-    def _subscribe(self, event_stream, event_handler):
+    def subscribe(self, event_stream, event_handler):
         if not event_stream in self._subscriptions:
             self._subscriptions[event_stream] = set()
         self._subscriptions[event_stream].add(event_handler)

@@ -72,7 +72,7 @@ class ClientController(object):
 
     def subscribe(self, event_stream):
         if event_stream in self._event_subscriptions: raise SubscriptionError("Already subscribed")
-        event_subscription = self._event_subscription_fulfiller._subscribe(event_stream, self._on_subscribed_event)
+        event_subscription = self._event_subscription_fulfiller.subscribe(event_stream, self._on_subscribed_event)
         self._event_subscriptions[event_stream] = event_subscription
 
     def unsubscribe(self, event_stream):
